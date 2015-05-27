@@ -1,0 +1,9 @@
+## Interface: 60100
+## Title: WhoDunIt
+## Notes: Tracks the failures of your allies
+## Author: Kevin Higgins
+
+Foo.xml
+
+inspect.lua
+Foo.lua

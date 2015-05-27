@@ -1,0 +1,11 @@
+<Frame name="Foo_Frame">
+  <Scripts>
+     <OnLoad>
+        Foo_OnLoad();
+     </OnLoad>
+     <OnEvent>
+        Foo_OnEvent(self, event, ...); -- The ... parameter passes all arguments that would otherwise be implicitly sent prior to 3.0.
+                                       -- As of 3.0, you will need to explicitly send these arguments (as done here).  
+     </OnEvent>
+  </Scripts>
+</Frame>
