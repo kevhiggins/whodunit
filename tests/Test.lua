@@ -14,6 +14,10 @@ local line = io.read()
 
 object = {}
 
+print(object.rawr)
+os.exit()
+
+
 while (line ~= nil) do
     local eventData = CombatLogConverter:convertEventData(line)
     --    print(event)
