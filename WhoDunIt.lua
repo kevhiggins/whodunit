@@ -7,8 +7,6 @@ function WhoDunItBase:new(o)
     return o
 end
 
-print "GRRz"
-
 function WhoDunItBase:processCombatLog(self, event, ...)
     print(line)
 end
