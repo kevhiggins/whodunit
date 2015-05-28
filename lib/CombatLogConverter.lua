@@ -16,6 +16,7 @@ function CombatLogConverter:convertEventData(line)
     local pattern = "(%d+)/(%d+) (%d+):(%d+):(%d+).(%d+)%s+(.*)"
     local month, day, hour, minute, second, millisecond, lineData = line:match(pattern)
 
+    -- TODO Parsing the CSV data is slow.
     local data = ParseCSVLine(lineData)
 
     local eventName = data[1]

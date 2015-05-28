@@ -1,4 +1,4 @@
-local EventManager = {
+EventManager = {
     encounters = {},
     activeEncounter = nil
 }
@@ -10,7 +10,7 @@ function EventManager:new(o)
     return o
 end
 
-function EventManager:processLogEntry(eventData)
+function EventManager:processEventData(eventData)
     local eventName = eventData[2]
 
     -- Check to see if an encounter is starting. If so, set it as the active encounter
@@ -25,8 +25,8 @@ function EventManager:processLogEntry(eventData)
             -- That's it. You can be done.
         end
     else
-        -- If the encounter is over for the active encounter, then set it to nil
-        if eventName == "ENCOUNTER_END" and self.activeEncounter.id == eventData[3] then
+        -- If the active encounter is over, then set it to nil
+        if eventName == "ENCOUNTER_END" and self.activeEncounter:getId() == eventData[3] then
             self.activeEncounter = nil
         else
             -- Using the activeEncounter, test the log data for fails
@@ -35,5 +35,8 @@ function EventManager:processLogEntry(eventData)
 end
 
 function EventManager:registerEncounter(encounter)
-    self.encounters[encounter.id] = encounter
+    self.encounters[encounter:getId()] = encounter
 end
+
+-- writeFail
+-- FailDetails (Mechanic specific page)
