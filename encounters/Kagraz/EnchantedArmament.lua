@@ -4,6 +4,8 @@ local EnchantedArmament = Mechanic:new(Kagraz,
 
 EnchantedArmament.spellId = 156713
 
+-- TODO Change name to Unquenchable Flame
+
 -- It should just be SPELL_DAMAGE and SPELL_MISS events. We will see though.
 -- Process the event data, and mark fails as they come up.
 function EnchantedArmament:processEventData(eventData)
