@@ -1,4 +1,4 @@
-Encounter = {
+local Encounter = {
     id = nil,
     name = nil,
     mechanics = {}
@@ -10,6 +10,9 @@ function Encounter:new(id, name)
     self.__index = self
     o.id = id
     o.name = name
+
+    WhoDunIt.eventManager:registerEncounter(o)
+
     return o
 end
 
@@ -30,3 +33,5 @@ end
 function Encounter:registerMechanic(mechanic)
     table.insert(self.mechanics, mechanic)
 end
+
+WhoDunIt.Encounter = Encounter

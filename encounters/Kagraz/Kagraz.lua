@@ -1,2 +1,2 @@
-Kagraz = Encounter:new(1689, "Flamebender Ka'graz")
-EventManager:registerEncounter(Kagraz);
+WhoDunIt.KAGRAZ_ENCOUNTER_ID = 1689
+WhoDunIt.Encounter:new(WhoDunIt.KAGRAZ_ENCOUNTER_ID, "Flamebender Ka'graz")
