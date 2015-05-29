@@ -21,6 +21,12 @@ function Encounter:getName()
     return self.name
 end
 
+function Encounter:processEventData(eventData)
+    for key, mechanic in pairs(self.mechanics) do
+        mechanic:processEventData(eventData)
+    end
+end
+
 function Encounter:registerMechanic(mechanic)
     table.insert(self.mechanics, mechanic)
 end

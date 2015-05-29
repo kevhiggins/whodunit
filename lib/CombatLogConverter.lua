@@ -25,30 +25,40 @@ function CombatLogConverter:convertEventData(line)
     local timestamp = os.time({ year = 2015, month = month, day = day, hour = hour, min = minute, sec = second })
     timestamp = timestamp .. "." .. millisecond
 
-    -- Timestamp, Event Name, Hide Caster
-    local eventData = { timestamp, eventName, false }
+    local eventData = { timestamp }
 
-    local isSpell = eventName:starts("SPELL_") or eventName:starts("RANGE_")
-    local isSwing = eventName:starts("SWING_")
-    local isEnvironmental = eventName:starts("ENVIRONMENTAL_")
+    if eventName == "ENCOUNTER_START" or eventName == "ENCOUNTER_END" then
 
-    -- TODO find out if those columns with zeroes in them are what gets populated with advanced logging.
-
-    -- Parse these events below - SWING, RANGE, SPELL, SPELL_PERIODIC, SPELL_BUILDING, ENVIRONMENTAL
-    if isSpell or isSwing or isEnvironmental then
-        -- Parse out the generic event fields
-        for i = 2, 9, 1 do
+        for i = 1, #data do
             table.insert(eventData, data[i])
         end
+    else
+        -- Timestamp, Event Name, Hide Caster
+        table.insert(eventData, eventName)
+        table.insert(eventData, false)
 
-        if isSpell then
-            self:parseSpellData(eventData, data)
-        elseif isSwing then
-            self:parseSwingData(data)
-        elseif isEnvironmental then
-            self:parseEnvironmental(data)
-        else
-            error("It should not be possible to reach this statement.")
+        local isSpell = eventName:starts("SPELL_") or eventName:starts("RANGE_")
+        local isSwing = eventName:starts("SWING_")
+        local isEnvironmental = eventName:starts("ENVIRONMENTAL_")
+
+        -- TODO find out if those columns with zeroes in them are what gets populated with advanced logging.
+
+        -- Parse these events below - SWING, RANGE, SPELL, SPELL_PERIODIC, SPELL_BUILDING, ENVIRONMENTAL
+        if isSpell or isSwing or isEnvironmental then
+            -- Parse out the generic event fields
+            for i = 2, 9, 1 do
+                table.insert(eventData, data[i])
+            end
+
+            if isSpell then
+                self:parseSpellData(eventData, data)
+            elseif isSwing then
+                self:parseSwingData(data)
+            elseif isEnvironmental then
+                self:parseEnvironmental(data)
+            else
+                error("It should not be possible to reach this statement.")
+            end
         end
     end
 

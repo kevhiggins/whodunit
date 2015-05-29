@@ -11,32 +11,41 @@ function EventManager:new(o)
 end
 
 function EventManager:processEventData(eventData)
-    local eventName = eventData[2]
-
-    -- Check to see if an encounter is starting. If so, set it as the active encounter
+    -- If no active encounter, check to see if one is starting. If there is an active encounter, check if it has ended.
+    -- If the encounter has no ended, process the event data for the active encounter.
     if self.activeEncounter == nil then
-        -- If no encounter is active, then see if one is starting
-        if eventName == "ENCOUNTER_START" then
-            local encounterId = eventData[3]
-            local encounter = self.encounters[encounterId]
-            if (encounter ~= nil) then
-                self.activeEncounter = encounter
-            end
-            -- That's it. You can be done.
-        end
+        self:isEncounterStart(eventData)
     else
-        -- If the active encounter is over, then set it to nil
-        if eventName == "ENCOUNTER_END" and self.activeEncounter:getId() == eventData[3] then
-            self.activeEncounter = nil
-        else
-            -- Using the activeEncounter, test the log data for fails
+        if self:isEncounterEnd(eventData) == false then
+            self.activeEncounter:processEventData(eventData)
         end
     end
+end
+
+function EventManager:isEncounterStart(eventData)
+    local eventName = eventData[2]
+    if eventName == "ENCOUNTER_START" then
+        local encounterId = tonumber(eventData[3])
+        local encounter = self.encounters[encounterId]
+
+        if (encounter ~= nil) then
+            self.activeEncounter = encounter
+            return true
+        end
+    end
+    return false
+end
+
+function EventManager:isEncounterEnd(eventData)
+    local eventName = eventData[2]
+    if eventName == "ENCOUNTER_END" and self.activeEncounter:getId() == tonumber(eventData[3]) then
+        print("END")
+        self.activeEncounter = nil
+        return true
+    end
+    return false
 end
 
 function EventManager:registerEncounter(encounter)
     self.encounters[encounter:getId()] = encounter
 end
-
--- writeFail
--- FailDetails (Mechanic specific page)
