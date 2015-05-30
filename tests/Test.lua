@@ -18,6 +18,7 @@ require("encounters/PeriodicSpell")
 require("encounters/Kagraz/Kagraz")
 require("encounters/Kagraz/UnquenchableFlame")
 require("encounters/Kagraz/LavaSlashGround")
+require("encounters/Kagraz/MoltenTorrent")
 require("encounters/Kagraz/Singe")
 require("encounters/Thogar/Thogar")
 
@@ -28,8 +29,6 @@ io.input(file)
 local line = io.read()
 
 object = {}
-
--- TODO Might want to have a configuration for when to start ignoring events.
 
 while (line ~= nil) do
     local eventData = CombatLogConverter:convertEventData(line)

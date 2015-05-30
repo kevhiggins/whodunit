@@ -23,29 +23,15 @@ function FailManager:logFail(fail)
     failGroup:addFail(fail)
 end
 
+-- TODO Might want to have a configuration for when to start ignoring events.
 function FailManager:display()
     print("")
 
     for attemptId, attempt in pairs(self.attempts) do
         print("Attempt #" .. attemptId .. " fails:\n")
         for mechanicId, failGroup in pairs(attempt) do
-            local unitFails = {}
             print(failGroup:getMechanic():getName())
-            for key, fail in pairs(failGroup:getFails()) do
-                for key, unit in pairs(fail.unitList) do
-                    if unitFails[unit.guid] == nill then
-                        unitFails[unit.guid] = 1
-                    else
-                        unitFails[unit.guid] = unitFails[unit.guid] + 1
-                    end
-                end
-            end
-
-            -- Print fail summaries for mechanic
-            for guid, failCount in pairs(unitFails) do
-                local unit = WhoDunIt.Unit:find(guid)
-                print(unit.name .. " - " .. failCount)
-            end
+            failGroup:getMechanic():render(failGroup)
             print("")
         end
     end
