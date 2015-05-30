@@ -1,6 +1,5 @@
 local Mechanic = {
     id = nil,
-    instanceCount = 0,
     encounter = nil,
     name = nil,
     description = nil,
@@ -10,11 +9,12 @@ local Mechanic = {
     PRIORITY_MEDIUM = 3,
     PRIORITY_LOW = 4
 }
+Mechanic.__index = Mechanic
+local instanceCount = 0;
 
 function Mechanic:new(encounterId, name, description, priority)
     local o = {}
     setmetatable(o, self)
-    self.__index = self
 
     o.name = name
     o.description = description
@@ -22,8 +22,8 @@ function Mechanic:new(encounterId, name, description, priority)
 
     o.encounter = WhoDunIt.eventManager:registerMechanic(encounterId, o)
 
-    self.instanceCount = self.instanceCount + 1
-    o.id = self.instanceCount
+    instanceCount = instanceCount + 1
+    o.id = instanceCount
 
     return o
 end
