@@ -54,8 +54,8 @@ function Mechanic:processEventData(eventData)
     error("This method needs to be implemented")
 end
 
-function Mechanic:logFail(guidList, data)
-    local fail = WhoDunIt.Fail:new(self, guidList, data)
+function Mechanic:logFail(unitList, data)
+    local fail = WhoDunIt.Fail:new(self, unitList, data)
     WhoDunIt.failManager:logFail(fail)
 end
 

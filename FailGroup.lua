@@ -1,6 +1,6 @@
 local FailGroup = {
     mechanic = nil,
-    fails = {}
+    fails = nil
 }
 
 function FailGroup:new(mechanic)
@@ -9,6 +9,7 @@ function FailGroup:new(mechanic)
     self.__index = self
 
     o.mechanic = mechanic
+    o.fails = {}
 
     return o
 end

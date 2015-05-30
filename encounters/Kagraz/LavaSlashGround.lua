@@ -1,17 +1,18 @@
-local UnquenchableFlame = WhoDunIt.Mechanic:new(
+local LavaSlashGround = WhoDunIt.Mechanic:new(
     WhoDunIt.KAGRAZ_ENCOUNTER_ID,
-    "Unquenchable Flame",
-    "Avoid spinning swords that float in the air and deal damage in an area of effect.",
+    "Lava Slash Ground",
+    "Don't stand in the lines of fire on the ground.",
     WhoDunIt.Mechanic.PRIORITY_MEDIUM
 )
 
-UnquenchableFlame.spellId = 156713
+LavaSlashGround.spellId = 155314
+-- 155318
 
 -- It should just be SPELL_DAMAGE and SPELL_MISS events. We will see though.
 -- Process the event data, and mark fails as they come up.
-function UnquenchableFlame:processEventData(eventData)
+function LavaSlashGround:processEventData(eventData)
     local eventName = eventData[2]
-    if eventName == "SPELL_DAMAGE" or eventName == "SPELL_MISS" then
+    if eventName == "SPELL_PERIODIC_DAMAGE" or eventName == "SPELL_PERIODIC_MISSED" then
         local spellId = tonumber(eventData[12])
         if spellId == self.spellId then
             local guid = eventData[8]

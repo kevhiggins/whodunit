@@ -10,10 +10,12 @@ require("EventManager")
 require("FailManager")
 require("FailGroup")
 require("Fail")
+require("Unit")
 require("encounters/Encounter")
 require("encounters/Mechanic")
 require("encounters/Kagraz/Kagraz")
 require("encounters/Kagraz/UnquenchableFlame")
+require("encounters/Kagraz/LavaSlashGround")
 require("encounters/Thogar/Thogar")
 
 local file = io.open("flame-bender-log.txt", "r")
@@ -23,6 +25,8 @@ io.input(file)
 local line = io.read()
 
 object = {}
+
+-- TODO Might want to have a configuration for when to start ignoring events.
 
 while (line ~= nil) do
     local eventData = CombatLogConverter:convertEventData(line)

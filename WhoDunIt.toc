@@ -5,5 +5,5 @@
 
 Foo.xml
 
-inspect.lua
+lib/Inspect.lua
 Foo.lua
