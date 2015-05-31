@@ -18,21 +18,23 @@ function EventManager:processEventData(eventData)
     end
 end
 
-function EventManager:isEncounterStart(eventData)
-    local eventName = eventData[2]
-    if eventName == "ENCOUNTER_START" then
-        local encounterId = tonumber(eventData[3])
-        local encounter = self.encounters[encounterId]
+-- TODO alter how code indexes the activeEncounter
+-- TODO setup end encounter like start encounter
+-- Todo setup the test script to call start encounter when the event is found in the log
+-- {encounterId, encounterName, difficultyID, raidSize}
+function EventManager:startEncounter(eventName, ...)
+    local encounterId = ...
+    encounterId = tonumber(encounterId)
+    local encounter = self.encounters[encounterId]
 
-        if (encounter ~= nil) then
-            self.activeEncounter = encounter
-            return true
-        end
+    if (encounter ~= nil) then
+        self.activeEncounter = encounter
+        return true
     end
     return false
 end
 
-function EventManager:isEncounterEnd(eventData)
+function EventManager:endEncounter(eventData)
     local eventName = eventData[2]
     if eventName == "ENCOUNTER_END" and self.activeEncounter:getId() == tonumber(eventData[3]) then
         self.activeEncounter = nil
