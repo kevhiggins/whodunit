@@ -28,8 +28,13 @@ function CombatLogConverter:convertEventData(line)
     local eventData = { timestamp }
 
     if eventName == "ENCOUNTER_START" or eventName == "ENCOUNTER_END" then
-
         for i = 1, #data do
+            table.insert(eventData, data[i])
+        end
+    elseif eventName == "UNIT_DIED" then
+        table.insert(eventData, eventName)
+        table.insert(eventData, false)
+        for i = 2, #data do
             table.insert(eventData, data[i])
         end
     else
