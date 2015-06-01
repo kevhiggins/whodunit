@@ -22,6 +22,8 @@ require("encounters/Kagraz/MoltenTorrent")
 require("encounters/Kagraz/Singe")
 require("encounters/Thogar/Thogar")
 
+local test = WhoDunIt.eventManager.startEncounter
+
 local file = io.open("flame-bender-log.txt", "r")
 
 io.input(file)

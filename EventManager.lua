@@ -7,15 +7,20 @@ local EventManager = {
 function EventManager:processEventData(eventData)
     -- If no active encounter, check to see if one is starting. If there is an active encounter, check if it has ended.
     -- If the encounter has no ended, process the event data for the active encounter.
-    if self.activeEncounter == nil then
-        if self:isEncounterStart(eventData) == true then
-            self.attemptId = self.attemptId + 1
-        end
-    else
-        if self:isEncounterEnd(eventData) == false then
-            self.activeEncounter:processEventData(eventData)
-        end
+
+    if self.activeEncounter ~= nil then
+        self.activeEncounter:processEventData(eventData)
     end
+--
+--    if self.activeEncounter == nil then
+--        if self:isEncounterStart(eventData) == true then
+--            self.attemptId = self.attemptId + 1
+--        end
+--    else
+--        if self:isEncounterEnd(eventData) == false then
+--            self.activeEncounter:processEventData(eventData)
+--        end
+--    end
 end
 
 -- TODO alter how code indexes the activeEncounter
@@ -23,6 +28,9 @@ end
 -- Todo setup the test script to call start encounter when the event is found in the log
 -- {encounterId, encounterName, difficultyID, raidSize}
 function EventManager:startEncounter(eventName, ...)
+    print(inspect(self))
+    print(eventName)
+    os.exit()
     local encounterId = ...
     encounterId = tonumber(encounterId)
     local encounter = self.encounters[encounterId]
