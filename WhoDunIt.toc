@@ -3,12 +3,9 @@
 ## Notes: Tracks the failures of your allies
 ## Author: Kevin Higgins
 
-
-
 lib/Inspect.lua
 
 WhoDunIt.lua
 EventManager.lua
 
-Foo.xml
-Foo.lua
+bind.lua
