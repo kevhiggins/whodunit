@@ -1,5 +1,3 @@
-print ("BINDING")
-
 -- ENCOUNTER_START hook
 local startEncounterFrame = CreateFrame("FRAME", "StartEncounterFrame");
 startEncounterFrame:RegisterEvent("ENCOUNTER_START")
