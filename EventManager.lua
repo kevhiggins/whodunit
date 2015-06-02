@@ -5,10 +5,9 @@ local EventManager = {
 }
 
 function EventManager:processCombatLog(...)
---    print(inspect({...}))
     if self.activeEncounter ~= nil then
         -- TODO consider renaming to processCombatLog
-        self.activeEncounter:processEventData({eventData})
+        self.activeEncounter:processEventData({...})
     end
 end
 

@@ -26,7 +26,6 @@ end
 -- TODO Might want to have a configuration for when to start ignoring events.
 function FailManager:display()
     print("")
-
     for attemptId, attempt in pairs(self.attempts) do
         print("Attempt #" .. attemptId .. " fails:\n")
         for mechanicId, failGroup in pairs(attempt) do

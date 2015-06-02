@@ -35,17 +35,15 @@ object = {}
 while (line ~= nil) do
     local eventData = CombatLogConverter:convertEventData(line)
     local eventName = eventData[2]
-    print(eventName)
-    os.exit()
 
     if eventName == "ENCOUNTER_START" then
+        WhoDunIt.eventManager:startEncounter(select(3, unpack(eventData)))
     elseif eventName == "ENCOUNTER_END" then
+        WhoDunIt.eventManager:endEncounter(select(3, unpack(eventData)))
     else
         WhoDunIt.eventManager:processCombatLog(unpack(eventData))
     end
 
-
-    --    print(event)
 
     -- Parse the data into the correct data series based on the incoming event.
 
