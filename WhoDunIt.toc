@@ -4,8 +4,26 @@
 ## Author: Kevin Higgins
 
 lib/Inspect.lua
+lib/Ace3/LibStub/LibStub.lua
+lib/Ace3/AceGUI-3.0/AceGUI-3.0.xml
 
 WhoDunIt.lua
 EventManager.lua
+FailManager.lua
+FailGroup.lua
+Fail.lua
+Unit.lua
+encounters/Encounter.lua
+encounters/Mechanic.lua
+encounters/Spell.lua
+encounters/PeriodicSpell.lua
+encounters/Kagraz/Kagraz.lua
+encounters/Kagraz/UnquenchableFlame.lua
+encounters/Kagraz/LavaSlashGround.lua
+encounters/Kagraz/MoltenTorrent.lua
+encounters/Kagraz/Singe.lua
+encounters/Thogar/Thogar.lua
+
+tests/flamebender.lua
 
 bind.lua

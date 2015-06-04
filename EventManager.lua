@@ -16,11 +16,11 @@ end
 -- Todo setup the test script to call start encounter when the event is found in the log
 -- {encounterId, encounterName, difficultyID, raidSize}
 function EventManager:startEncounter(encounterID, encounterName, difficultyID, raidSize)
---    print("ENCOUNTER_START")
---    print(encounterID)
---    print(encounterName)
---    print(difficultyID)
---    print(raidSize)
+    print("ENCOUNTER_START")
+    print(encounterID)
+    print(encounterName)
+    print(difficultyID)
+    print(raidSize)
 
     encounterID = tonumber(encounterID)
     local encounter = self.encounters[encounterID]
@@ -31,12 +31,12 @@ function EventManager:startEncounter(encounterID, encounterName, difficultyID, r
 end
 
 function EventManager:endEncounter(encounterID, encounterName, difficultyId, raidSize, endStatus)
---    print("ENCOUNTER_END")
---    print(encounterID)
---    print(encounterName)
---    print(difficultyID)
---    print(raidSize)
---    print(endStatus)
+    print("ENCOUNTER_END")
+    print(encounterID)
+    print(encounterName)
+    print(difficultyID)
+    print(raidSize)
+    print(endStatus)
 
     encounterID = tonumber(encounterID)
 
