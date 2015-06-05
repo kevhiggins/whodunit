@@ -34,7 +34,7 @@ local AceGUI = LibStub("AceGUI-3.0")
 -- SLASH command hook
 SLASH_WHODUNIT1 = '/whodunit'; -- 3.
 function SlashCmdList.WHODUNIT(msg, editbox)
-    runTestData()
+--    runTestData()
     -- TODO
     -- Create a frame
     -- Make sure the frame is scrollable
