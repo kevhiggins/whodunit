@@ -39,11 +39,13 @@ function Spell:render(failGroup)
         end
     end
 
+    local output = ""
     -- Print fail summaries for mechanic
     for guid, failCount in pairs(unitFails) do
         local unit = WhoDunIt.Unit:find(guid)
-        print(unit.name .. " - " .. failCount)
+        output = output .. unit.name .. " - " .. failCount .. WhoDunIt.eol
     end
+    return output
 end
 
 WhoDunIt.Spell = Spell

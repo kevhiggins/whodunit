@@ -34,19 +34,22 @@ local AceGUI = LibStub("AceGUI-3.0")
 -- SLASH command hook
 SLASH_WHODUNIT1 = '/whodunit'; -- 3.
 function SlashCmdList.WHODUNIT(msg, editbox)
+    runTestData()
     -- TODO
     -- Create a frame
     -- Make sure the frame is scrollable
     -- Update frame with the result of FailManager display
-    local frame = scrollFrame()
-    frame.text = frame:CreateFontString(nil, "BACKGROUND", "PVPInfoTextFont");
+    local frame, bodyFrame, scrollFrame, content, scrollBar = scrollFrame()
+--    frame.text = frame:CreateFontString(nil, "BACKGROUND", "PVPInfoTextFont");
 
     local function onUpdate(self, elapsed)
-
+        self.text:SetText(WhoDunIt.failManager:display())
+        -- TODO it looks like this gives too much space. Figure out why
+        scrollBar:SetMinMaxValues(1, self.text:GetHeight())
     end
 
     local e = 0
-    frame:SetScript("OnUpdate", function(self, elapsed)
+    bodyFrame:SetScript("OnUpdate", function(self, elapsed)
         e = e + elapsed
         if e >= 0.5 then
             e = 0
@@ -55,49 +58,36 @@ function SlashCmdList.WHODUNIT(msg, editbox)
     end)
     end
 
-    function sillyFrame()
-        --parent frame
-        local MOD_TextFrame = CreateFrame("Frame");
-        --    MOD_TextFrame:ClearAllPoints();
-        MOD_TextFrame:SetHeight(300);
-        MOD_TextFrame:SetWidth(300);
-        --    MOD_TextFrame:Hide();
-        MOD_TextFrame.text = MOD_TextFrame:CreateFontString(nil, "BACKGROUND", "PVPInfoTextFont");
-        MOD_TextFrame.text:SetAllPoints();
-        MOD_TextFrame:SetPoint("CENTER", 0, 200);
-        --    MOD_TextFrameTime = 0;
-
-
-        local function MOD_TextMessage(message)
-            MOD_TextFrame.text:SetText(message);
-            --        MOD_TextFrame:SetAlpha(1);
-            --        MOD_TextFrame:Show();
-            --        MOD_TextFrameTime = GetTime();
-        end
-
-        MOD_TextMessage("RAWR")
-    end
-
     function scrollFrame()
-        --parent frame
+        -- Create the root frame
         local frame = CreateFrame("Frame", "MyFrame", UIParent)
         frame:SetSize(220, 200)
         frame:SetPoint("CENTER")
-        local texture = frame:CreateTexture()
+
+        -- Create the menu bar
+        local menuBar = CreateFrame("Frame", "WhoDunIt_Menu_Bar", frame)
+        menuBar:SetSize(220, 25)
+        menuBar:SetPoint("TOPLEFT", 0, 0)
+        local menuBarTexture = menuBar:CreateTexture()
+        menuBarTexture:SetAllPoints()
+        menuBarTexture:SetTexture(.25, .41, .88, 1)
+
+        -- Create the scroll frame
+        local scrollframe = CreateFrame("ScrollFrame", nil, frame)
+        scrollframe:SetPoint("TOPLEFT", 0, -25)
+        scrollframe:SetPoint("BOTTOMRIGHT", 0, 0)
+
+        -- Create the content background TODO move this to the content frame
+        local texture = scrollframe:CreateTexture()
         texture:SetAllPoints()
         texture:SetTexture(0, 0, 0, 0.6)
-        frame.background = texture
 
-        --scrollframe
-        local scrollframe = CreateFrame("ScrollFrame", nil, frame)
-        scrollframe:SetPoint("TOPLEFT", 10, -10)
-        scrollframe:SetPoint("BOTTOMRIGHT", -10, 10)
         --    local texture = scrollframe:CreateTexture()
         --    texture:SetAllPoints()
         --    texture:SetTexture(0, 0, 0, 0.4)
         --    frame.scrollframe = scrollframe
 
-        --scrollbar
+        -- Scroll bar
         local scrollbar = CreateFrame("Slider", nil, scrollframe, "UIPanelScrollBarTemplate")
         scrollbar:SetPoint("TOPLEFT", frame, "TOPRIGHT", 4, -16)
         scrollbar:SetPoint("BOTTOMLEFT", frame, "BOTTOMRIGHT", 4, 16)
@@ -115,15 +105,32 @@ function SlashCmdList.WHODUNIT(msg, editbox)
         scrollbg:SetTexture(0, 0, 0, 0.4)
         frame.scrollbar = scrollbar
 
-        --content frame
+        -- Content frame
         local content = CreateFrame("Frame", nil, scrollframe)
-        content:SetSize(128, 128)
-        --    local texture = content:CreateTexture()
-        --    texture:SetAllPoints()
-        --    texture:SetTexture("Interface\\GLUES\\MainMenu\\Glues-BlizzardLogo")
-        --    content.texture = texture
-        scrollframe.content = content
+        content:SetPoint("TOPLEFT", 0, 0)
+        content:SetSize(220, 500)
 
+        local body = CreateFrame("Frame", nil, content)
+        body:SetPoint("TOPLEFT", 5, -5)
+        body:SetPoint("BOTTOMRIGHT", 0, 0)
+
+--        content.background = texture
+
+
+--            local texture = content:CreateTexture()
+--            texture:SetAllPoints()
+--            texture:SetTexture("Interface\\GLUES\\MainMenu\\Glues-BlizzardLogo")
+--            content.texture = texture
+
+        local text = body:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        text:SetPoint("TOPLEFT", 0, 0)
+        text:SetTextColor(1, 1, 1)
+        text:SetText("AWOO")
+        body.text = text
+
+
+
+        scrollframe.content = content
         scrollframe:SetScrollChild(content)
 
         frame:SetMovable(true)
@@ -132,7 +139,7 @@ function SlashCmdList.WHODUNIT(msg, editbox)
         frame:SetScript("OnDragStart", frame.StartMoving)
         frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
 
-        return frame
+        return frame, body, scrollframe, content, scrollbar
     end
 
     function runTestData()
@@ -143,10 +150,31 @@ function SlashCmdList.WHODUNIT(msg, editbox)
         end
 
         WhoDunIt.eventManager:endEncounter(unpack({ 1689, "Flamebender Ka'graz", 15, 15, 0 }))
-
-        WhoDunIt.failManager:display()
     end
 
     function test()
     end
 
+
+function sillyFrame()
+    --parent frame
+    local MOD_TextFrame = CreateFrame("Frame");
+    --    MOD_TextFrame:ClearAllPoints();
+    MOD_TextFrame:SetHeight(300);
+    MOD_TextFrame:SetWidth(300);
+    --    MOD_TextFrame:Hide();
+    MOD_TextFrame.text = MOD_TextFrame:CreateFontString(nil, "BACKGROUND", "PVPInfoTextFont");
+    MOD_TextFrame.text:SetAllPoints();
+    MOD_TextFrame:SetPoint("CENTER", 0, 200);
+    --    MOD_TextFrameTime = 0;
+
+
+    local function MOD_TextMessage(message)
+        MOD_TextFrame.text:SetText(message);
+        --        MOD_TextFrame:SetAlpha(1);
+        --        MOD_TextFrame:Show();
+        --        MOD_TextFrameTime = GetTime();
+    end
+
+    MOD_TextMessage("RAWR")
+end

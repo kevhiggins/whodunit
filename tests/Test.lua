@@ -1,7 +1,5 @@
 package.path = package.path .. ";../?.lua"
 
-WhoDunIt = {}
-
 require('lib/Inspect')
 require('lib/ParseCSVLine')
 require("lib/CombatLogConverter")
@@ -21,6 +19,8 @@ require("encounters/Kagraz/LavaSlashGround")
 require("encounters/Kagraz/MoltenTorrent")
 require("encounters/Kagraz/Singe")
 require("encounters/Thogar/Thogar")
+
+WhoDunIt.eol = "\n"
 
 local test = WhoDunIt.eventManager.startEncounter
 
@@ -53,4 +53,4 @@ while (line ~= nil) do
     line = io.read()
 end
 
-WhoDunIt.failManager:display()
+print(WhoDunIt.failManager:display())

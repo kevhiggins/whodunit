@@ -25,15 +25,16 @@ end
 
 -- TODO Might want to have a configuration for when to start ignoring events.
 function FailManager:display()
-    print("")
+    local output = WhoDunIt.eol
     for attemptId, attempt in pairs(self.attempts) do
-        print("Attempt #" .. attemptId .. " fails:\n")
+        output = output .. "Attempt #" .. attemptId .. " fails:" .. WhoDunIt.eol
         for mechanicId, failGroup in pairs(attempt) do
-            print(failGroup:getMechanic():getName())
-            failGroup:getMechanic():render(failGroup)
-            print("")
+            output = output .. failGroup:getMechanic():getName() .. WhoDunIt.eol
+            output = output .. failGroup:getMechanic():render(failGroup)
+            output = output .. WhoDunIt.eol
         end
     end
+    return output
 end
 
 WhoDunIt.failManager = FailManager

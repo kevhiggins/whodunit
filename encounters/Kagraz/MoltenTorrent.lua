@@ -62,6 +62,7 @@ function MoltenTorrent:processEventData(eventData)
 end
 
 function MoltenTorrent:render(failGroup)
+    local output = ""
     for key, fail in pairs(failGroup:getFails()) do
         local wasFatal = #fail.data.deaths > 0
         local fatalString = ""
@@ -69,6 +70,7 @@ function MoltenTorrent:render(failGroup)
             fatalString = "X"
         end
 
-        print(fatalString .. " " .. fail.unitList[1].name .. " - " .. #fail.data.hits)
-    end;
+        output = output .. fatalString .. " " .. fail.unitList[1].name .. " - " .. #fail.data.hits .. WhoDunIt.eol
+    end
+    return output
 end
